@@ -139,7 +139,7 @@ export default function createLedgerSubprovider(
       const eth = new AppEth(transport);
       const tx = new EthereumTx(txData);
 
-      // Set the EIP155 bits
+      // Set the EIP155 skys
       tx.raw[6] = Buffer.from([networkId]); // v
       tx.raw[7] = Buffer.from([]); // r
       tx.raw[8] = Buffer.from([]); // s

@@ -7,7 +7,7 @@ import {
   RecordStore
 } from "@ledgerhq/hw-transport-mocker";
 import getSnapshotJSONFile from "./getSnapshotJSONFile";
-import ensureBtcSnapshotAccount from "./ensureBtcSnapshotAccount";
+import ensureSkySnapshotAccount from "./ensureSkySnapshotAccount";
 import runTests from "./runTests";
 
 const snapshotMode = process.argv[2] === "snapshot";
@@ -17,7 +17,7 @@ const records = {};
 async function main() {
   if (snapshotMode) {
     const t = await TransportHid.create();
-    ensureBtcSnapshotAccount(t);
+    ensureSkySnapshotAccount(t);
     await t.close();
   }
 

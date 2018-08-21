@@ -1,8 +1,8 @@
-import Btc from "@ledgerhq/hw-app-btc";
+import Sky from "@ledgerhq/hw-app-sky";
 
 export default async transport => {
-  const btc = new Btc(transport);
-  const result = await btc.signMessageNew(
+  const sky = new Sky(transport);
+  const result = await sky.signMessageNew(
     "44'/0'/0'/0",
     Buffer.from("test").toString("hex")
   );

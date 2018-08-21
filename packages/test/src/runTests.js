@@ -1,19 +1,10 @@
-import testBtc from "./testBtc";
-import testBtc2 from "./testBtc2";
-import testBtc3 from "./testBtc3";
-import testBtc4 from "./testBtc4";
-import testBtcSegMulti from "./testBtcSegMulti";
-import testBtcSignP2SHSeg from "./testBtcSignP2SHSeg";
-import testEth from "./testEth";
-import testEth2 from "./testEth2";
-import testEth3 from "./testEth3";
-import testEth4 from "./testEth4";
-import testXrp from "./testXrp";
-import testXrp2 from "./testXrp2";
-import testXrp3 from "./testXrp3";
-import testStr from "./testStr";
-import testStr2 from "./testStr2";
-import testStr3 from "./testStr3";
+import testSky from "./testSky";
+import testSky2 from "./testSky2";
+import testSky3 from "./testSky3";
+import testSky4 from "./testSky4";
+import testSkySegMulti from "./testSkySegMulti";
+import testSkySignP2SHSeg from "./testSkySignP2SHSeg";
+
 
 function expectAppContext(appName) {
   // TODO improve this by waiting user to do an action?
@@ -24,26 +15,13 @@ function expectAppContext(appName) {
 }
 
 var tests = [
-  expectAppContext("Bitcoin (btc)"),
-  { name: "testBtc", run: testBtc },
-  { name: "testBtc2", run: testBtc2 },
-  { name: "testBtc3", run: testBtc3 },
-  { name: "testBtc4", run: testBtc4 },
-  { name: "testBtcSegMulti", run: testBtcSegMulti },
-  { name: "testBtcSignP2SHSeg", run: testBtcSignP2SHSeg },
-  expectAppContext("Ethereum (eth)"),
-  { name: "testEth", run: testEth },
-  { name: "testEth2", run: testEth2 },
-  { name: "testEth3", run: testEth3 },
-  { name: "testEth4", run: testEth4 },
-  expectAppContext("Ripple (xrp)"),
-  { name: "testXrp", run: testXrp },
-  { name: "testXrp2", run: testXrp2 },
-  { name: "testXrp3", run: testXrp3 },
-  expectAppContext("Stellar"),
-  { name: "testStr", run: testStr },
-  { name: "testStr2", run: testStr2 },
-  { name: "testStr3", run: testStr3 }
+  expectAppContext("Skycoin (sky)"),
+  { name: "testSky", run: testSky },
+  { name: "testSky2", run: testSky2 },
+  { name: "testSky3", run: testSky3 },
+  { name: "testSky4", run: testSky4 },
+  { name: "testSkySegMulti", run: testSkySegMulti },
+  { name: "testSkySignP2SHSeg", run: testSkySignP2SHSeg }
 ];
 
 const defaultWaitForAppSwitch = step =>

@@ -6,7 +6,7 @@
   "license": "Apache-2.0",
   "dependencies": {
     "@ledgerhq/hw-app-ada": "^4.22.0",
-    "@ledgerhq/hw-app-btc": "^4.21.0",
+    "@ledgerhq/hw-app-sky": "^4.21.0",
     "@ledgerhq/hw-app-eth": "^4.21.0",
     "@ledgerhq/hw-app-str": "^4.21.0",
     "@ledgerhq/hw-app-xrp": "^4.21.0",

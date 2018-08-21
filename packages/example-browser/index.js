@@ -2,7 +2,7 @@ import "./index.css";
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import TransportU2F from "@ledgerhq/hw-transport-u2f";
-import Btc from "@ledgerhq/hw-app-btc";
+import Sky from "@ledgerhq/hw-app-sky";
 import Eth from "@ledgerhq/hw-app-eth";
 
 class App extends Component {
@@ -10,13 +10,13 @@ class App extends Component {
     address: null,
     error: null
   };
-  onGetLedgerBitcoinAddress = async () => {
+  onGetLedgerSkycoinAddress = async () => {
     try {
       this.setState({ error: null });
       const transport = await TransportU2F.create();
-      const btc = new Btc(transport);
-      const { bitcoinAddress } = await btc.getWalletPublicKey("44'/0'/0'/0");
-      this.setState({ address: bitcoinAddress });
+      const sky = new Sky(transport);
+      const { skycoinAddress } = await sky.getWalletPublicKey("44'/0'/0'/0");
+      this.setState({ address: skycoinAddress });
     } catch (error) {
       this.setState({ error });
     }
@@ -37,8 +37,8 @@ class App extends Component {
     return (
       <div>
         <p>
-          <button onClick={this.onGetLedgerBitcoinAddress}>
-            Get Ledger Bitcoin Address
+          <button onClick={this.onGetLedgerSkycoinAddress}>
+            Get Ledger Skycoin Address
           </button>
         </p>
         <p>

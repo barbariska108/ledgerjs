@@ -3,7 +3,7 @@
 // TODO future refactoring
 // - drop utils.js & refactoring with async/await style
 // - try to avoid every place we do hex<>Buffer conversion. also accept Buffer as func parameters (could accept both a string or a Buffer in the API)
-// - there are redundant code across apps (see Eth vs Btc). we might want to factorize it somewhere. also each app apdu call should be abstracted it out as an api
+// - there are redundant code across apps (see Eth vs Sky). we might want to factorize it somewhere. also each app apdu call should be abstracted it out as an api
 import { foreach, doIf, asyncWhile, splitPath, eachSeries } from "./utils";
 import type Transport from "@ledgerhq/hw-transport";
 import createHash from "create-hash";
@@ -19,13 +19,13 @@ const HASH_SIZE = 0x14;
 const OP_EQUALVERIFY = 0x88;
 const OP_CHECKSIG = 0xac;
 /**
- * Bitcoin API.
+ * Skycoin API.
  *
  * @example
- * import Btc from "@ledgerhq/hw-app-btc";
- * const btc = new Btc(transport)
+ * import Sky from "@ledgerhq/hw-app-sky";
+ * const sky = new Sky(transport)
  */
-export default class Btc {
+export default class Sky {
   transport: Transport<*>;
 
   constructor(transport: Transport<*>) {
@@ -38,7 +38,7 @@ export default class Btc {
         "signMessageNew",
         "createPaymentTransactionNew"
       ],
-      "BTC"
+      "SKY"
     );
   }
 
@@ -58,7 +58,7 @@ export default class Btc {
     segwit: boolean
   ): Promise<{
     publicKey: string,
-    bitcoinAddress: string,
+    skycoinAddress: string,
     chainCode: string
   }> {
     const paths = splitPath(path);
@@ -79,7 +79,7 @@ export default class Btc {
       const publicKeyLength = response[0];
       const addressLength = response[1 + publicKeyLength];
       const publicKey = response.slice(1, 1 + publicKeyLength).toString("hex");
-      const bitcoinAddress = response
+      const skycoinAddress = response
         .slice(1 + publicKeyLength + 1, 1 + publicKeyLength + 1 + addressLength)
         .toString("ascii");
       const chainCode = response
@@ -88,7 +88,7 @@ export default class Btc {
           1 + publicKeyLength + 1 + addressLength + 32
         )
         .toString("hex");
-      return { publicKey, bitcoinAddress, chainCode };
+      return { publicKey, skycoinAddress, chainCode };
     });
   }
 
@@ -96,7 +96,7 @@ export default class Btc {
    * @param path a BIP 32 path
    * @param segwit use segwit
    * @example
-   * btc.getWalletPublicKey("44'/0'/0'/0").then(o => o.bitcoinAddress)
+   * sky.getWalletPublicKey("44'/0'/0'/0").then(o => o.skycoinAddress)
    */
   getWalletPublicKey(
     path: string,
@@ -104,7 +104,7 @@ export default class Btc {
     segwit?: boolean = false
   ): Promise<{
     publicKey: string,
-    bitcoinAddress: string,
+    skycoinAddress: string,
     chainCode: string
   }> {
     return this.getWalletPublicKey_private(path, verify, segwit);
@@ -416,9 +416,9 @@ export default class Btc {
   }
 
   /**
-   * You can sign a message according to the Bitcoin Signature format and retrieve v, r, s given the message and the BIP 32 path of the account to sign.
+   * You can sign a message according to the Skycoin Signature format and retrieve v, r, s given the message and the BIP 32 path of the account to sign.
    * @example
-   btc.signMessageNew_async("44'/60'/0'/0'/0", Buffer.from("test").toString("hex")).then(function(result) {
+   sky.signMessageNew_async("44'/60'/0'/0'/0", Buffer.from("test").toString("hex")).then(function(result) {
      var v = result['v'] + 27 + 4;
      var signature = Buffer.from(v.toString(16) + result['r'] + result['s'], 'hex').toString('base64');
      console.log("Signature : " + signature);
@@ -504,7 +504,7 @@ export default class Btc {
    * @param expiryHeight is an optional Buffer for zec overwinter Txs
    * @return the signed transaction ready to be broadcast
    * @example
-btc.createPaymentTransactionNew(
+sky.createPaymentTransactionNew(
    [ [tx1, 1] ],
    ["0'/0/0"],
    undefined,
@@ -791,7 +791,7 @@ btc.createPaymentTransactionNew(
    * @param sigHashType is the hash type of the transaction to sign, or default (all)
    * @return the signed transaction ready to be broadcast
    * @example
-btc.signP2SHTransaction(
+sky.signP2SHTransaction(
  [ [tx, 1, "52210289b4a3ad52a919abd2bdd6920d8a6879b1e788c38aa76f0440a6f32a9f1996d02103a3393b1439d1693b063482c04bd40142db97bdf139eedd1b51ffb7070a37eac321030b9a409a1e476b0d5d17b804fcdb81cf30f9b99c6f3ae1178206e08bc500639853ae"] ],
  ["0'/0/0"],
  "01905f0100000000001976a91472a5d75c8d2d0565b656a5232703b167d50d5a2b88ac"
@@ -955,7 +955,7 @@ btc.signP2SHTransaction(
   /**
    * For each UTXO included in your transaction, create a transaction object from the raw serialized version of the transaction used in this UTXO.
    * @example
-const tx1 = btc.splitTransaction("01000000014ea60aeac5252c14291d428915bd7ccd1bfc4af009f4d4dc57ae597ed0420b71010000008a47304402201f36a12c240dbf9e566bc04321050b1984cd6eaf6caee8f02bb0bfec08e3354b022012ee2aeadcbbfd1e92959f57c15c1c6debb757b798451b104665aa3010569b49014104090b15bde569386734abf2a2b99f9ca6a50656627e77de663ca7325702769986cf26cc9dd7fdea0af432c8e2becc867c932e1b9dd742f2a108997c2252e2bdebffffffff0281b72e00000000001976a91472a5d75c8d2d0565b656a5232703b167d50d5a2b88aca0860100000000001976a9144533f5fb9b4817f713c48f0bfe96b9f50c476c9b88ac00000000");
+const tx1 = sky.splitTransaction("01000000014ea60aeac5252c14291d428915bd7ccd1bfc4af009f4d4dc57ae597ed0420b71010000008a47304402201f36a12c240dbf9e566bc04321050b1984cd6eaf6caee8f02bb0bfec08e3354b022012ee2aeadcbbfd1e92959f57c15c1c6debb757b798451b104665aa3010569b49014104090b15bde569386734abf2a2b99f9ca6a50656627e77de663ca7325702769986cf26cc9dd7fdea0af432c8e2becc867c932e1b9dd742f2a108997c2252e2bdebffffffff0281b72e00000000001976a91472a5d75c8d2d0565b656a5232703b167d50d5a2b88aca0860100000000001976a9144533f5fb9b4817f713c48f0bfe96b9f50c476c9b88ac00000000");
    */
   splitTransaction(
     transactionHex: string,
@@ -1047,8 +1047,8 @@ const tx1 = btc.splitTransaction("01000000014ea60aeac5252c14291d428915bd7ccd1bfc
 
   /**
   @example
-const tx1 = btc.splitTransaction("01000000014ea60aeac5252c14291d428915bd7ccd1bfc4af009f4d4dc57ae597ed0420b71010000008a47304402201f36a12c240dbf9e566bc04321050b1984cd6eaf6caee8f02bb0bfec08e3354b022012ee2aeadcbbfd1e92959f57c15c1c6debb757b798451b104665aa3010569b49014104090b15bde569386734abf2a2b99f9ca6a50656627e77de663ca7325702769986cf26cc9dd7fdea0af432c8e2becc867c932e1b9dd742f2a108997c2252e2bdebffffffff0281b72e00000000001976a91472a5d75c8d2d0565b656a5232703b167d50d5a2b88aca0860100000000001976a9144533f5fb9b4817f713c48f0bfe96b9f50c476c9b88ac00000000");
-const outputScript = btc.serializeTransactionOutputs(tx1).toString('hex');
+const tx1 = sky.splitTransaction("01000000014ea60aeac5252c14291d428915bd7ccd1bfc4af009f4d4dc57ae597ed0420b71010000008a47304402201f36a12c240dbf9e566bc04321050b1984cd6eaf6caee8f02bb0bfec08e3354b022012ee2aeadcbbfd1e92959f57c15c1c6debb757b798451b104665aa3010569b49014104090b15bde569386734abf2a2b99f9ca6a50656627e77de663ca7325702769986cf26cc9dd7fdea0af432c8e2becc867c932e1b9dd742f2a108997c2252e2bdebffffffff0281b72e00000000001976a91472a5d75c8d2d0565b656a5232703b167d50d5a2b88aca0860100000000001976a9144533f5fb9b4817f713c48f0bfe96b9f50c476c9b88ac00000000");
+const outputScript = sky.serializeTransactionOutputs(tx1).toString('hex');
   */
   serializeTransactionOutputs({ outputs }: Transaction): Buffer {
     let outputBuffer = Buffer.alloc(0);
