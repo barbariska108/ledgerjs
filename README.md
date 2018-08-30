@@ -16,7 +16,7 @@ applications. There are implementations for Node and Browser.
 | [`@ledgerhq/web3-subprovider`](/packages/web3-subprovider)                           | [![npm](https://img.shields.io/npm/v/@ledgerhq/web3-subprovider.svg)](https://www.npmjs.com/package/@ledgerhq/web3-subprovider)                           | web3 subprovider implementation for web3-provider-engine                                                     |
 | **Apps**                                                                             |
 | [`@ledgerhq/hw-app-eth`](/packages/hw-app-eth)                                       | [![npm](https://img.shields.io/npm/v/@ledgerhq/hw-app-eth.svg)](https://www.npmjs.com/package/@ledgerhq/hw-app-eth)                                       | Ethereum Application API                                                                                     |
-| [`@ledgerhq/hw-app-btc`](/packages/hw-app-btc)                                       | [![npm](https://img.shields.io/npm/v/@ledgerhq/hw-app-btc.svg)](https://www.npmjs.com/package/@ledgerhq/hw-app-btc)                                       | Bitcoin Application API                                                                                      |
+| [`@ledgerhq/hw-app-sky`](/packages/hw-app-sky)                                       | [![npm](https://img.shields.io/npm/v/@ledgerhq/hw-app-sky.svg)](https://www.npmjs.com/package/@ledgerhq/hw-app-sky)                                       | Skycoin Application API                                                                                      |
 | [`@ledgerhq/hw-app-xrp`](/packages/hw-app-xrp)                                       | [![npm](https://img.shields.io/npm/v/@ledgerhq/hw-app-xrp.svg)](https://www.npmjs.com/package/@ledgerhq/hw-app-xrp)                                       | Ripple Application API                                                                                       |
 | [`@ledgerhq/hw-app-str`](/packages/hw-app-str)                                       | [![npm](https://img.shields.io/npm/v/@ledgerhq/hw-app-str.svg)](https://www.npmjs.com/package/@ledgerhq/hw-app-str)                                       | Stellar Application API                                                                                      |
 | [`@ledgerhq/hw-app-ada`](/packages/hw-app-ada)                                       | [![npm](https://img.shields.io/npm/v/@ledgerhq/hw-app-ada.svg)](https://www.npmjs.com/package/@ledgerhq/hw-app-ada)                                       | Cardano ADA Application API                                                                                  |
@@ -39,12 +39,12 @@ applications. There are implementations for Node and Browser.
 ```js
 import Transport from "@ledgerhq/hw-transport-node-hid";
 // import Transport from "@ledgerhq/hw-transport-u2f"; // for browser
-import AppBtc from "@ledgerhq/hw-app-btc";
+import AppBtc from "@ledgerhq/hw-app-sky";
 const getBtcAddress = async () => {
   const transport = await Transport.create();
-  const btc = new AppBtc(transport);
-  const result = await btc.getWalletPublicKey("44'/0'/0'/0/0");
-  return result.bitcoinAddress;
+  const sky = new AppBtc(transport);
+  const result = await sky.getWalletPublicKey("44'/0'/0'/0/0");
+  return result.skycoinAddress;
 };
 getBtcAddress().then(a => console.log(a));
 ```
@@ -108,7 +108,7 @@ yarn test
 
 **then to test on a real device...**
 
-Plug a device like the Nano S and open Bitcoin app.
+Plug a device like the Nano S and open Skycoin app.
 
 Then run the test and accept the commands on the devices for the tests to
 continue.

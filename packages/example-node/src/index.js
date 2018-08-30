@@ -1,5 +1,5 @@
 import TransportNodeHid from "@ledgerhq/hw-transport-node-hid";
-import AppBtc from "@ledgerhq/hw-app-btc";
+import AppBtc from "@ledgerhq/hw-app-sky";
 
 async function example() {
   const transport = await TransportNodeHid.create(5000);
