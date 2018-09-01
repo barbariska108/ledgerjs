@@ -15,11 +15,7 @@ applications. There are implementations for Node and Browser.
 | [`create-dapp`](/packages/create-dapp)                                               | [![npm](https://img.shields.io/npm/v/create-dapp.svg)](https://www.npmjs.com/package/create-dapp)                                                         | Ledger DApp Ethereum starter kit                                                                             |
 | [`@ledgerhq/web3-subprovider`](/packages/web3-subprovider)                           | [![npm](https://img.shields.io/npm/v/@ledgerhq/web3-subprovider.svg)](https://www.npmjs.com/package/@ledgerhq/web3-subprovider)                           | web3 subprovider implementation for web3-provider-engine                                                     |
 | **Apps**                                                                             |
-| [`@ledgerhq/hw-app-eth`](/packages/hw-app-eth)                                       | [![npm](https://img.shields.io/npm/v/@ledgerhq/hw-app-eth.svg)](https://www.npmjs.com/package/@ledgerhq/hw-app-eth)                                       | Ethereum Application API                                                                                     |
-| [`@ledgerhq/hw-app-sky`](/packages/hw-app-sky)                                       | [![npm](https://img.shields.io/npm/v/@ledgerhq/hw-app-sky.svg)](https://www.npmjs.com/package/@ledgerhq/hw-app-sky)                                       | Skycoin Application API                                                                                      |
-| [`@ledgerhq/hw-app-xrp`](/packages/hw-app-xrp)                                       | [![npm](https://img.shields.io/npm/v/@ledgerhq/hw-app-xrp.svg)](https://www.npmjs.com/package/@ledgerhq/hw-app-xrp)                                       | Ripple Application API                                                                                       |
-| [`@ledgerhq/hw-app-str`](/packages/hw-app-str)                                       | [![npm](https://img.shields.io/npm/v/@ledgerhq/hw-app-str.svg)](https://www.npmjs.com/package/@ledgerhq/hw-app-str)                                       | Stellar Application API                                                                                      |
-| [`@ledgerhq/hw-app-ada`](/packages/hw-app-ada)                                       | [![npm](https://img.shields.io/npm/v/@ledgerhq/hw-app-ada.svg)](https://www.npmjs.com/package/@ledgerhq/hw-app-ada)                                       | Cardano ADA Application API                                                                                  |
+| [`@ledgerhq/hw-app-sky`](/packages/hw-app-sky)                                       | [![npm](https://img.shields.io/npm/v/@ledgerhq/hw-app-sky.svg)](https://www.npmjs.com/package/@ledgerhq/hw-app-sky)                                       | Skycoin Application API                                                                                                                                                                  |
 | **Transports**                                                                       |
 | [`@ledgerhq/hw-transport-node-hid`](/packages/hw-transport-node-hid)                 | [![npm](https://img.shields.io/npm/v/@ledgerhq/hw-transport-node-hid.svg)](https://www.npmjs.com/package/@ledgerhq/hw-transport-node-hid)                 | Node implementation of the communication layer, using `node-hid` (USB)                                       |
 | [`@ledgerhq/hw-transport-u2f`](/packages/hw-transport-u2f)                           | [![npm](https://img.shields.io/npm/v/@ledgerhq/hw-transport-u2f.svg)](https://www.npmjs.com/package/@ledgerhq/hw-transport-u2f)                           | Web implementation of the communication layer, using [U2F api](https://github.com/grantila/u2f-api)          |
@@ -40,9 +36,9 @@ applications. There are implementations for Node and Browser.
 import Transport from "@ledgerhq/hw-transport-node-hid";
 // import Transport from "@ledgerhq/hw-transport-u2f"; // for browser
 import AppBtc from "@ledgerhq/hw-app-sky";
-const getBtcAddress = async () => {
+const getSkyAddress = async () => {
   const transport = await Transport.create();
-  const sky = new AppBtc(transport);
+  const sky = new AppSky(transport);
   const result = await sky.getWalletPublicKey("44'/0'/0'/0/0");
   return result.skycoinAddress;
 };

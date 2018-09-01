@@ -27,7 +27,7 @@ export type Observer<Ev> = $ReadOnly<{
 
 /**
  * all possible status codes.
- * @see https://github.com/LedgerHQ/blue-app-sky/blob/d8a03d10f77ca5ef8b22a5d062678eef788b824a/include/skyhip_apdu_constants.h#L85-L115
+ * @see https://github.com/LedgerHQ/blue-app-sky/blob/d8a03d10f77ca5ef8b22a5d062678eef788b824a/include/btchip_apdu_constants.h#L85-L115
  * @example
  * import { StatusCodes } from "@ledgerhq/hw-transport";
  */

@@ -21,17 +21,6 @@ class App extends Component {
       this.setState({ error });
     }
   };
-  onGetLedgerEthereumAddress = async () => {
-    try {
-      this.setState({ error: null });
-      const transport = await TransportU2F.create();
-      const eth = new Eth(transport);
-      const { address } = await eth.getAddress("44'/60'/0'/0'/0");
-      this.setState({ address });
-    } catch (error) {
-      this.setState({ error });
-    }
-  };
   render() {
     const { address, error } = this.state;
     return (
