@@ -1,6 +1,6 @@
 import Sky from "@ledgerhq/hw-app-sky";
 
-const expectedSkycoinAddress = "13KE6TffArLh4fVM6uoQzvsYq5vwetJcVM";
+const expectedSkycoinAddress = "3NpgZ6g1UWZc5f5B7gC3hU6NhyEWxznohG";
 export default async transport => {
   const sky = new Sky(transport);
   const result = await sky.getWalletPublicKey("44'/0'/0'/0");
